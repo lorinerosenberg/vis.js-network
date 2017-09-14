@@ -1,6 +1,7 @@
 //data
 var info = {
     10: {
+        'id' : 10,
         'parent': null,
         'children': [100],
         'shortText': 'question',
@@ -8,6 +9,7 @@ var info = {
         'group': 'question'
     },
     100: {
+        'id' : 100,
         'parent': 10,
         'children': [101, 102],
         'shortText': 'answer',
@@ -15,13 +17,15 @@ var info = {
         'group': 'answer'
     },
     101: {
+        'id' : 101,
         'parent': 100,
-        'children': [1010, 1011],
+        'children': [1010, 1011, 1012, 1013],
         'shortText': 'blah1',
         'fullText': 'blah blah1',
         'group': 'supporting'
     },
     102: {
+        'id' : 102,
         'parent': 100,
         'children': [1020, 1021, 1022],
         'shortText': 'blah2',
@@ -29,20 +33,39 @@ var info = {
         'group': 'disproving'
     },
     1010: {
+        'id' : 1010,
         'parent': 101,
         'children': [10101, 10102, 10103],
-        'shortText': 'blah01',
+        'shortText': 'blah1010',
         'fullText': 'blah blah10',
         'group': 'disproving'
     },
     1011: {
+        'id' : 1011,
         'parent': 101,
         'children': [10111],
-        'shortText': 'blah01',
+        'shortText': 'blah1011',
         'fullText': 'blah blah11',
         'group': 'supporting'
     },
+    1012: {
+        'id' : 1012,
+        'parent': 101,
+        'children': [10121],
+        'shortText': 'blah1012',
+        'fullText': 'blah blah12',
+        'group': 'supporting'
+    },
+    1013: {
+        'id' : 1013,
+        'parent': 101,
+        'children': [10131],
+        'shortText': 'blah1013',
+        'fullText': 'blah blah13',
+        'group': 'supporting'
+    },
     1020: {
+        'id' : 1020,
         'parent': 102,
         'children': [10201],
         'shortText': 'blah20',
@@ -50,6 +73,7 @@ var info = {
         'group': 'supporting'
     },
     1021: {
+        'id' : 1021,
         'parent': 102,
         'children': [10211],
         'shortText': 'blah21',
@@ -57,6 +81,7 @@ var info = {
         'group': 'disproving'
     },
     1022: {
+        'id' : 1022,
         'parent': 102,
         'children': [10221],
         'shortText': 'blah22',
@@ -65,10 +90,14 @@ var info = {
     }
 };
 
+
+
 var questionNode = info[10].shortText;
 var selectedNode = info[101];
 var parentNode = selectedNode.parent; //returns an id [100]
-// var childrenNodes = selectedNode.children; // returns one value or array [1010, 1011]
+var childrenNodes = selectedNode.children; // returns one value or array [1010, 1011]
+var selectedID = (selectedNode.id).toString();
+
 
 var nodeData = [];
 var edgeData = [];
@@ -76,17 +105,25 @@ var edgeData = [];
 // node data
 var parent = {id: 'parent', label: info[parentNode].shortText, fullText: info[parentNode].fullText, group: info[parentNode].group};
 var selected = {id: 'selected', label: selectedNode.shortText, fullText: selectedNode.fullText, group: 'selected'};
-var child1010 = {id: 'child1010', label: 'egwgwg', fullText: 'ewrwerwerwrw', group: 'supporting'};
-var child1011 = {id: 'child1011', label: 'werwerwerwerw', fullText: 'werdfhrhrth', group: 'disproving'};
 
-// edge data
+// edge datas
 var parentEdge = {from: 'parent', to: 'selected', smooth: false};
-var selectedEdge1010 = {from: 'selected', to: 'child1010'};
-var selectedEdge1011 = {from: 'selected', to: 'child1011'};
 
+// loop to create children node data and their edges
+for (var i in childrenNodes){
+    var childNode = childrenNodes[i];
+    var childID = 'child' + selectedID;
+    var edgeID = 'edge' + selectedID;
+    window[childID+i] = {id: childID+i, label: info[childNode].shortText, fullText: info[childNode].fullText, group: info[childNode].group};
+    nodeData.push(window[childID+i]);
+    window[edgeID+i] = {from: 'selected', to: childID+i};
+    edgeData.push(window[edgeID+i]);
+};
 
-nodeData.push(parent, selected, child1010, child1011);
-edgeData.push(parentEdge, selectedEdge1010, selectedEdge1011);
+console.log(edgeData);
+
+nodeData.push(parent, selected);
+edgeData.push(parentEdge);
 
 // create dataSet from predefined data above
 var nodes = new vis.DataSet(nodeData);
@@ -225,7 +262,6 @@ $( document ).ready(function() {
     // change central node to selected node
     // TODO: need to switch all data around according
     // TODO: parent node changes to old selected
-    // TODO: child node numbers dependant
     function selectNode(node){
         var label = nodes.get(node)[0].label;
         var group = nodes.get(node)[0].group;
