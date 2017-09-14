@@ -1,34 +1,99 @@
-// global variables for node labels
+//data
+var info = {
+    10: {
+        'parent': null,
+        'children': [100],
+        'shortText': 'question',
+        'fullText': 'question full text',
+        'group': 'question'
+    },
+    100: {
+        'parent': 10,
+        'children': [101, 102],
+        'shortText': 'answer',
+        'fullText': 'answer full text',
+        'group': 'answer'
+    },
+    101: {
+        'parent': 100,
+        'children': [1010, 1011],
+        'shortText': 'blah1',
+        'fullText': 'blah blah1',
+        'group': 'supporting'
+    },
+    102: {
+        'parent': 100,
+        'children': [1020, 1021, 1022],
+        'shortText': 'blah2',
+        'fullText': 'blah blah2',
+        'group': 'disproving'
+    },
+    1010: {
+        'parent': 101,
+        'children': [10101, 10102, 10103],
+        'shortText': 'blah01',
+        'fullText': 'blah blah10',
+        'group': 'disproving'
+    },
+    1011: {
+        'parent': 101,
+        'children': [10111],
+        'shortText': 'blah01',
+        'fullText': 'blah blah11',
+        'group': 'supporting'
+    },
+    1020: {
+        'parent': 102,
+        'children': [10201],
+        'shortText': 'blah20',
+        'fullText': 'blah blah20',
+        'group': 'supporting'
+    },
+    1021: {
+        'parent': 102,
+        'children': [10211],
+        'shortText': 'blah21',
+        'fullText': 'blah blah21',
+        'group': 'disproving'
+    },
+    1022: {
+        'parent': 102,
+        'children': [10221],
+        'shortText': 'blah22',
+        'fullText': 'blah blah22',
+        'group': 'supporting'
+    }
+};
 
-var parent = {label: 'General Principals...', fullText: "General Principals: Can we ensure that AI is transparent?", group: 'answer'};
-var selected = {label: 'Etzioni (NB- Member of ...', fullText: "Etzioni (NB- Member of IEEE committee, LinkedIn )- yes - an A.I. system must clearly disclose that it is not human. As we have seen in the case of bots — computer programs that can engage in increasingly sophisticated dialogue with real people — society needs assurances that A.I. systems are clearly labeled as such. In 2016, a bot known as Jill Watson, which served as a teaching assistant for an online course at Georgia Tech, fooled students into thinking it was human. A more serious example is the widespread use of pro-Trump political bots on social media in the days leading up to the 2016 elections, according to researchers at Oxford.", group:'supporting'};
-var child1 = {label:'If so then we should also have...', fullText: "If so then we should also have statutory labels whenever there is photoshop or comedic dubbing", group: 'supporting' };
-var child2 = {label: 'That should also include ...', fullText: "That should also include automated transcripts from voice recognition on videos", group: 'supporting'};
-var child3 = {label: 'Disagree. If we take the ..', fullText: "Disagree. If we take the example of photoshop, the regulation varies from country to country. Australia for example does not regulate whereas UK and Israel does. Even if Etzioni is right for bots, it does not mean we need to change the law for photoshop", group: 'disproving'}
+var questionNode = info[10].shortText;
+var selectedNode = info[101];
+var parentNode = selectedNode.parent; //returns an id [100]
+// var childrenNodes = selectedNode.children; // returns one value or array [1010, 1011]
+
+var nodeData = [];
+var edgeData = [];
+
+// node data
+var parent = {id: 'parent', label: info[parentNode].shortText, fullText: info[parentNode].fullText, group: info[parentNode].group};
+var selected = {id: 'selected', label: selectedNode.shortText, fullText: selectedNode.fullText, group: 'selected'};
+var child1010 = {id: 'child1010', label: 'egwgwg', fullText: 'ewrwerwerwrw', group: 'supporting'};
+var child1011 = {id: 'child1011', label: 'werwerwerwerw', fullText: 'werdfhrhrth', group: 'disproving'};
+
+// edge data
+var parentEdge = {from: 'parent', to: 'selected', smooth: false};
+var selectedEdge1010 = {from: 'selected', to: 'child1010'};
+var selectedEdge1011 = {from: 'selected', to: 'child1011'};
 
 
-// create an array with nodes
-var nodes = new vis.DataSet([
-    {id: 'parent', label: parent.label, group: parent.group, fullText: parent.fullText},
-    {id: 'selected', label: selected.label, group: 'selected', fullText: selected.fullText},
-    {id: 'child1', label: child1.label , group: child1.group, fullText: child1.fullText },
-    {id: 'child2', label: child2.label, group: child2.group, fullText: child2.fullText },
-    {id: 'child3', label: child3.label, group: child3.group, fullText: child3.fullText }
-]);
+nodeData.push(parent, selected, child1010, child1011);
+edgeData.push(parentEdge, selectedEdge1010, selectedEdge1011);
 
-
+// create dataSet from predefined data above
+var nodes = new vis.DataSet(nodeData);
 // create an array with edges
-var edges = new vis.DataSet([
-    {id: 1, from: 'parent', to: 'selected', smooth: false},
-    {id: 2, from: 'selected', to: 'child1'},
-    {id: 3, from: 'selected', to: 'child2'},
-    {id: 4, from: 'selected', to: 'child3'}
-]);
-
-
+var edges = new vis.DataSet(edgeData);
 // create a network
 var container = document.getElementById('mynetwork');
-
 // provide the data in the vis format
 var data = {
     nodes: nodes,
@@ -141,17 +206,14 @@ var options = {
 
 // initialize network
 var network = new vis.Network(container, data, options);
-
 network.setOptions(options);
-
 
 
 // prep screen on load
 $( document ).ready(function() {
 
     // heading text to page question
-    var question = "General Principals: Can we ensure that AI is transparent?";
-    $(".question").html(question);
+    $(".question").html(questionNode);
 
     // show full text of selected node
     // TODO: change from alert box to dialog box
@@ -170,15 +232,13 @@ $( document ).ready(function() {
         nodes.update({id: 'selected', label: label, group: group });
     }
 
-    network.on('click', function(event){
+    network.on('hold', function(event){
         var node = event.nodes;
         showText(node);
     });
     network.on('doubleClick', function(event){
         var node = event.nodes;
         selectNode(node);
-    })
-
-
+    });
 });
 
