@@ -1,6 +1,6 @@
 {
   "id": 1,
-  "name": "Are universal human rights really universal?",
+  "name": "Are universal human rights really universal",
   "children": [
     {
       "id": 2,
@@ -9,7 +9,7 @@
         {
           "id": 3,
           "name": "Etzioni (NB- Member of IEEE committee, LinkedIn )- yes - an A.I. system must clearly disclose that it is not human. As we have seen in the case of bots — computer programs that can engage in increasingly sophisticated dialogue with real people — society needs assurances that A.I. systems are clearly labeled as such. In 2016, a bot known as Jill Watson, which served as a teaching assistant for an online course at Georgia Tech, fooled students into thinking it was human. A more serious example is the widespread use of pro-Trump political bots on social media in the days leading up to the 2016 elections, according to researchers at Oxford.",
-          "class" : "supporting",
+          "class": "supporting",
           "children": [
             {
               "id": 4,
@@ -19,7 +19,8 @@
                 {
                   "id": 5,
                   "name": "#Feedback right here I might want to bring in another expert and not necessarily show them the thread above. e.g. start another question and link it to above. This is where it gets interesting who has admin rights, who can confer, can that person hide parts of the ​conversation. My intuition is that whoever owns the license has admin or group of admins can see everything and they control groups of who sees daughter questions. It's probably later down your dev path, from a user view even in enterprise, say intel, these 'Chinese Walls' could be a user feature to consider.Add Supporting Claim...",
-                  "class": "supporting"},
+                  "class": "supporting"
+                },
                 {
                   "id": 6,
                   "name": "No photoshop should not be included. If a person wants to adjust an image - say apply a filter- why should that be included? It's not a machine",
@@ -43,7 +44,8 @@
                                 {
                                   "id": 5,
                                   "name": "#Feedback right here I might want to bring in another expert and not necessarily show them the thread above. e.g. start another question and link it to above. This is where it gets interesting who has admin rights, who can confer, can that person hide parts of the ​conversation. My intuition is that whoever owns the license has admin or group of admins can see everything and they control groups of who sees daughter questions. It's probably later down your dev path, from a user view even in enterprise, say intel, these 'Chinese Walls' could be a user feature to consider.Add Supporting Claim...",
-                                  "class": "supporting"},
+                                  "class": "supporting"
+                                },
                                 {
                                   "id": 6,
                                   "name": "No photoshop should not be included. If a person wants to adjust an image - say apply a filter- why should that be included? It's not a machine",
@@ -60,108 +62,144 @@
                                           "class": "disproving",
                                           "children": [
                                             {
-                              "id": 9,
-                              "name": "#Feedback. In this longer thread there's a claim and then a denial and then a denial on the denial which makes it a positive. Wondering whether system should do something like make the granddaughter (double negative) a grandmother and swap colors, if that makes sense. The reason as user I did not post the granddaughter in the level of the grandmother is because it is arguing an ever more specific case, so it would not make sense in the logic of the conversation when I write it to put it at grandmother level.",
-                              "class" : "supporting"},
+                                              "id": 9,
+                                              "name": "#Feedback. In this longer thread there's a claim and then a denial and then a denial on the denial which makes it a positive. Wondering whether system should do something like make the granddaughter (double negative) a grandmother and swap colors, if that makes sense. The reason as user I did not post the granddaughter in the level of the grandmother is because it is arguing an ever more specific case, so it would not make sense in the logic of the conversation when I write it to put it at grandmother level.",
+                                              "class": "supporting"
+                                            },
+                                            {
+                                              "id": 10,
+                                              "name": "Disagree. It seems you say that influence over a person's politics has more ethical weight than influence over how a person feels about their body. This is not proven to be true.",
+                                              "class": "disproving"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "id": 11,
+                                      "name": "Well photoshopping is already labeled in Israel.",
+                                      "class": "disproving"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "id": 12,
+                                  "name": "Disagree. If we take the example of photoshop, the regulation varies from country to country. Australia for example does not regulate whereas UK and Israel does. Even if Etzioni is right for bots, it does not mean we need to change the law for photoshop",
+                                  "class": "disproving",
+                                  "children": [
+                                    {
+                                      "id": 13,
+                                      "name": "#Feedback in the above the quality of the research is arguably higher than other places as it is academic, as opposed to news reports in other places. A user may want to flag that.",
+                                      "class": "supporting"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
                             {
-                              "id": 10,
-                              "name": "Disagree. It seems you say that influence over a person's politics has more ethical weight than influence over how a person feels about their body. This is not proven to be true.",
-                              "class": "disproving"}
-                          ]}
-                      ]},
-                    {
-                      "id": 11,
-                      "name": "Well photoshopping is already labeled in Israel.",
-                      "class": "disproving"}
-                  ]},
-                {
-                  "id": 12,
-                  "name": "Disagree. If we take the example of photoshop, the regulation varies from country to country. Australia for example does not regulate whereas UK and Israel does. Even if Etzioni is right for bots, it does not mean we need to change the law for photoshop",
-                  "class": "disproving",
-                  "children": [
-                    {
-                      "id": 13,
-                      "name": "#Feedback in the above the quality of the research is arguably higher than other places as it is academic, as opposed to news reports in other places. A user may want to flag that.",
-                      "class": "supporting"}
-                  ]}
-              ]},
-            {
-              "id": 14,
-              "name": "That should also include automated transcripts from voice recognition on videos",
-              "class": "supporting"},
-            {
-              "id": 15,
-              "name": "#Feedback- a place for questions/comments (maybe it's here and I missed it). (1) To question the question (questions often contain assumptions (2) to seek clarification of what others stated above - what if it's vague or unclear? (3) to say if you above said X doesn't that mean Y.",
-              "class": "supporting"},
-            {
-              "id": 16,
-              "name": "This already happens with photoshop. What is unethical here is misleading humans about how humans look. If so for physical looks, how much more so for political influence",
-              "class": "supporting"},
-            {
-              "id": 17,
-              "name": "Yes. Celebrity bots are very popular with teenagers.",
-              "class": "supporting",
-              "children": [
-                {
-                  "id": 18,
-                  "name": "Taking Etzioni's point further, celebrity bots should be banned from minors. They cannot differentiate between fantasy and reality.",
-                  "class": "supporting",
-                  "children": [
-                    {
-                      "id": 19,
-                      "name": "#Feedback above somebody takes the mother comment point of view and extrapolates it to form a more specific focused view and backs that with evidence. In enterprise this might show up as: e..g Mother comment. GBPUSD will soften Q3 2017 . Daughter comment. Yes, it has a 80% chance of weakening by more than 30%, see this research.",
-                      "class": "supporting"},
-                    {
-                      "id": 20,
-                      "name": "Flag for further study: at what age is there a ​consensus for when children become adults and can distinguish fantasy from reality. If there is a cut off point, should this impact how we deal with AI transparency?",
-                      "class": "supporting",
-                      "children": [
-                        {
-                          "id": 21,
-                          "name": "# Feedback from above. This is a prompt to possibly start a new question based on thread above. In GBPUSD example it might show up as: Flag for further study. If we have a 80% chance of GBPUSD weakening more than 30%, how will that impact bonds?",
-                          "class": "supporting"},
-                        {
-                          "id": 22,
-                          "name": "Yes, there is a ​clear precedent for this in advertising​ to children.",
-                          "class": "supporting",
-                          "children": [
+                              "id": 14,
+                              "name": "That should also include automated transcripts from voice recognition on videos",
+                              "class": "supporting"
+                            },
                             {
-                              "id": 23,
-                              "name": "#Feedback. Much further down your dev cycle, it could be nice to consider a way to invite people into discussion midway when their expert opinion is valid and to have an onboarding email that shows them discussion so far and asks their opinion. In this case someone might email Commercial Free Childhood org mentioned in article cited above. They would get summary of discussion according to privacy settings and then X wanted to know if you have any insights supporting or disproving the claim [there is clear precedent for this in advertising for children]. Also, I am thinking this is a way to help make your SW users go viral. People like being cited and are likely to respond.",
-                              "class": "supporting"}
-                          ]}
-                      ]}
-                  ]}
-              ]},
-            {
-              "id": 24,
-              "name": "This argument is a red herring. AI systems / bots prefer to interact with bots more than humans since there is less chance of miscommunication. The core issue is not bots declaring they are thus to humans, the core issue is that letting in bots to make decisions for us bleeds dry our own human autonomy",
-              "class": "supporting",
-              "children": [
-                {
-                  "id": 25,
-                  "name": "#Feedback. This point is not arguing the mother point right or wrong, it is stating that the relevance of the mother point is weak. In essence, ​the author is saying- when you look at this topic, give the [issue of human autonomy] more weight than [issue of AI transparency]. Not sure if helpful, am capturing as go along before forget that sometimes experts will find more passion to disagree on principles relative to claims/evidence accumulation. I see it's flagged as debatable which is pretty great!",
-                  "class": "supporting"},
-                {
-                  "id": 26,
-                  "name": "# love that this recognizes it's debatable!",
-                  "class": "supporting"},
-                {
-                  "id": 27,
-                  "name": "No, it is more relevant to look at AI transparency. We can't fight against the fact that bots will prefer to communicate with bots.",
-                  "class": "disproving"}
-              ]},
-            {
-              "id": 28,
-              "name": "To take an extreme point- is there a difference between a very scripted conversation on Liveperson with a human agent and a bot?",
-              "class": "disproving"}
-          ]}
-      ]},
-    {
-      "id": 29,
-      "name": "General Principals: How can we extend the benefits and minimize the risks of AI technology being misused?"},
-    {
-      "id": 30,
-      "name": "Talmud test trial. Silver acquires gold"}
+                              "id": 15,
+                              "name": "#Feedback- a place for questions/comments (maybe it's here and I missed it). (1) To question the question (questions often contain assumptions (2) to seek clarification of what others stated above - what if it's vague or unclear? (3) to say if you above said X doesn't that mean Y.",
+                              "class": "supporting"
+                            },
+                            {
+                              "id": 16,
+                              "name": "This already happens with photoshop. What is unethical here is misleading humans about how humans look. If so for physical looks, how much more so for political influence",
+                              "class": "supporting"
+                            },
+                            {
+                              "id": 17,
+                              "name": "Yes. Celebrity bots are very popular with teenagers.",
+                              "class": "supporting",
+                              "children": [
+                                {
+                                  "id": 18,
+                                  "name": "Taking Etzioni's point further, celebrity bots should be banned from minors. They cannot differentiate between fantasy and reality.",
+                                  "class": "supporting",
+                                  "children": [
+                                    {
+                                      "id": 19,
+                                      "name": "#Feedback above somebody takes the mother comment point of view and extrapolates it to form a more specific focused view and backs that with evidence. In enterprise this might show up as: e..g Mother comment. GBPUSD will soften Q3 2017 . Daughter comment. Yes, it has a 80% chance of weakening by more than 30%, see this research.",
+                                      "class": "supporting"
+                                    },
+                                    {
+                                      "id": 20,
+                                      "name": "Flag for further study: at what age is there a ​consensus for when children become adults and can distinguish fantasy from reality. If there is a cut off point, should this impact how we deal with AI transparency?",
+                                      "class": "supporting",
+                                      "children": [
+                                        {
+                                          "id": 21,
+                                          "name": "# Feedback from above. This is a prompt to possibly start a new question based on thread above. In GBPUSD example it might show up as: Flag for further study. If we have a 80% chance of GBPUSD weakening more than 30%, how will that impact bonds?",
+                                          "class": "supporting"
+                                        },
+                                        {
+                                          "id": 22,
+                                          "name": "Yes, there is a ​clear precedent for this in advertising​ to children.",
+                                          "class": "supporting",
+                                          "children": [
+                                            {
+                                              "id": 23,
+                                              "name": "#Feedback. Much further down your dev cycle, it could be nice to consider a way to invite people into discussion midway when their expert opinion is valid and to have an onboarding email that shows them discussion so far and asks their opinion. In this case someone might email Commercial Free Childhood org mentioned in article cited above. They would get summary of discussion according to privacy settings and then X wanted to know if you have any insights supporting or disproving the claim [there is clear precedent for this in advertising for children]. Also, I am thinking this is a way to help make your SW users go viral. People like being cited and are likely to respond.",
+                                              "class": "supporting"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "id": 24,
+                              "name": "This argument is a red herring. AI systems / bots prefer to interact with bots more than humans since there is less chance of miscommunication. The core issue is not bots declaring they are thus to humans, the core issue is that letting in bots to make decisions for us bleeds dry our own human autonomy",
+                              "class": "supporting",
+                              "children": [
+                                {
+                                  "id": 25,
+                                  "name": "#Feedback. This point is not arguing the mother point right or wrong, it is stating that the relevance of the mother point is weak. In essence, ​the author is saying- when you look at this topic, give the [issue of human autonomy] more weight than [issue of AI transparency]. Not sure if helpful, am capturing as go along before forget that sometimes experts will find more passion to disagree on principles relative to claims/evidence accumulation. I see it's flagged as debatable which is pretty great!",
+                                  "class": "supporting"
+                                },
+                                {
+                                  "id": 26,
+                                  "name": "# love that this recognizes it's debatable!",
+                                  "class": "supporting"
+                                },
+                                {
+                                  "id": 27,
+                                  "name": "No, it is more relevant to look at AI transparency. We can't fight against the fact that bots will prefer to communicate with bots.",
+                                  "class": "disproving"
+                                }
+                              ]
+                            },
+                            {
+                              "id": 28,
+                              "name": "To take an extreme point- is there a difference between a very scripted conversation on Liveperson with a human agent and a bot?",
+                              "class": "disproving"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "id": 29,
+                      "name": "General Principals: How can we extend the benefits and minimize the risks of AI technology being misused?"
+                    },
+                    {
+                      "id": 30,
+                      "name": "Talmud test trial. Silver acquires gold"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
   ]
 }
