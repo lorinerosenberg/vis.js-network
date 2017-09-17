@@ -124,7 +124,11 @@ $(document).ready(function() {
     var selected;
 
 
-// loop to create children node data and their edges
+    // heading text to page question
+    $(".question").html(questionNode);
+    getData(10);
+
+    // mindmap functionality
     function getData(selectedID) {
 
         selectedNode = info[selectedID];
@@ -161,6 +165,7 @@ $(document).ready(function() {
                     group: info[childNode].group
                 };
                 nodeData.push(window['child' + childID + i]);
+
                 window['edge' + edgeID + i] = {
                     id: edgeID + i,
                     from: 'selected',
@@ -170,6 +175,7 @@ $(document).ready(function() {
             }
         }
         else {
+            console.log('else');
             return null;
         }
 
@@ -188,132 +194,127 @@ $(document).ready(function() {
             edges: edges
         };
 
+        // option details
+        var options = {
+
+            autoResize: true,
+            height: '100%',
+
+            // edges options and styles
+            edges: {
+                arrows: {
+                    to: {enabled: true, scaleFactor: 0.7, type: 'arrow'}
+                },
+                arrowStrikethrough: true,
+                color: {
+                    inherit: 'to',
+                    opacity: 1.0
+                },
+                physics: true,
+                scaling: {
+                    min: 1,
+                    max: 15
+                },
+                smooth: {
+                    enabled: true,
+                    type: "curvedCW",
+                    roundness: 0.4
+                },
+                selectionWidth: 2,
+                selfReferenceSize: 20
+            },
+
+            // groups options and styles (like classes)
+            groups: {
+                selected: {color: {background: 'white', border: 'blue '}, font: {size: 20}, borderWidth: 2},
+                supporting: {color: {background: 'white', border: 'blue'}},
+                disproving: {color: {background: 'white', border: 'red'}},
+                answer: {color: {background: 'white', border: 'black'}}
+            },
+
+            // mouse and touch events
+            interaction: {
+                dragNodes: false,
+                dragView: false,
+                navigationButtons: true,
+                selectConnectedEdges: true,
+                zoomView: true
+            },
+
+            // hierarchy
+            layout: {
+                improvedLayout: true,
+                hierarchical: {
+                    enabled: true,
+                    levelSeparation: 300,
+                    nodeSpacing: 300,
+                    treeSpacing: 200,
+                    blockShifting: true,
+                    parentCentralization: true,
+                    direction: 'LR',        // UD, DU, LR, RL
+                    sortMethod: 'directed'   // hubsize, directed
+                }
+            },
+
+            // nodes options and styles
+            nodes: {
+                font: {
+                    color: '#343434',
+                    size: 15, // px
+                    face: 'arial'
+                },
+                heightConstraint: {
+                    minimum: 70,
+                    valign: 'middle'
+                },
+                mass: 1,
+                physics: true,
+                scaling: {
+                    label: {
+                        enabled: true,
+                        min: 14,
+                        max: 15,
+                        maxVisible: 15,
+                        drawThreshold: 5
+                    }
+                },
+                shape: 'box',
+                shapeProperties: {
+                    borderRadius: 6
+                }
+            },
+
+            // movement of nodes and edges
+            physics: {
+                enabled: true,
+                hierarchicalRepulsion: {
+                    centralGravity: 0.0,
+                    springLength: 300,
+                    springConstant: 0.05,
+                    nodeDistance: 100,
+                    damping: 0.09
+                }
+            }
+        };
+
+
         // initialize network
         network = new vis.Network(container, data, options);
         network.setOptions(options);
 
-        network.on('doubleClick', function (event) {
-            console.log('clicked');
+        network.on('hold', function (event) {
             var clickedNode = event.nodes;
             getData(clickedNode);
         });
 
+        network.on('doubleClick', function(event){
+            var selectedNode = event.nodes;
+            var text = nodes.get(selectedNode)[0].fullText;
+            alert(text);
+        })
+
     }
 
 
-// option details
-    var options = {
-
-        autoResize: true,
-        height: '100%',
-
-        // edges options and styles
-        edges: {
-            arrows: {
-                to: {enabled: true, scaleFactor: 0.7, type: 'arrow'}
-            },
-            arrowStrikethrough: true,
-            color: {
-                inherit: 'to',
-                opacity: 1.0
-            },
-            physics: true,
-            scaling: {
-                min: 1,
-                max: 15
-            },
-            smooth: {
-                enabled: true,
-                type: "curvedCW",
-                roundness: 0.4
-            },
-            selectionWidth: 2,
-            selfReferenceSize: 20
-        },
-
-        // groups options and styles (like classes)
-        groups: {
-            selected: {color: {background: 'white', border: 'blue '}, font: {size: 20}, borderWidth: 2},
-            supporting: {color: {background: 'white', border: 'blue'}},
-            disproving: {color: {background: 'white', border: 'red'}},
-            answer: {color: {background: 'white', border: 'black'}}
-        },
-
-        // mouse and touch events
-        interaction: {
-            dragNodes: false,
-            dragView: false,
-            navigationButtons: true,
-            selectConnectedEdges: true,
-            zoomView: true
-        },
-
-        // hierarchy
-        layout: {
-            improvedLayout: true,
-            hierarchical: {
-                enabled: true,
-                levelSeparation: 300,
-                nodeSpacing: 300,
-                treeSpacing: 200,
-                blockShifting: true,
-                parentCentralization: true,
-                direction: 'LR',        // UD, DU, LR, RL
-                sortMethod: 'directed'   // hubsize, directed
-            }
-        },
-
-        // nodes options and styles
-        nodes: {
-            font: {
-                color: '#343434',
-                size: 15, // px
-                face: 'arial'
-            },
-            heightConstraint: {
-                minimum: 70,
-                valign: 'middle'
-            },
-            mass: 1,
-            physics: true,
-            scaling: {
-                label: {
-                    enabled: true,
-                    min: 14,
-                    max: 15,
-                    maxVisible: 15,
-                    drawThreshold: 5
-                }
-            },
-            shape: 'box',
-            shapeProperties: {
-                borderRadius: 6
-            }
-        },
-
-        // movement of nodes and edges
-        physics: {
-            enabled: true,
-            hierarchicalRepulsion: {
-                centralGravity: 0.0,
-                springLength: 300,
-                springConstant: 0.05,
-                nodeDistance: 100,
-                damping: 0.09
-            }
-        }
-    };
-
-
-// heading text to page question
-    $(".question").html(questionNode);
-    getData(10);
-
-// show full text of selected node
-// TODO: change from alert box to dialog box
-    function showText(node) {
-        var text = nodes.get(node)[0].fullText;
-        alert(text);
-    }
 
 });
