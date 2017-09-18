@@ -293,6 +293,7 @@ $(document).ready(function() {
                     to: childID + i
                 };
                 edgeData.push(window['edge' + edgeID + i]);
+
             }
         }
         else {
@@ -432,32 +433,66 @@ $(document).ready(function() {
             var nodeData = nodes.get(selectedNode)[0];
             var text = nodes.get(selectedNode)[0].fullText;
             var childNode = nodeData.children;
-            console.log(childNode);
-            if (childNode != null) {
-                if (text != null) {
-                    (".child-nodes").html(childNode.length);
-                    $(".full-text").html(text)
-                }
-                else {
-                    $(".full-text").html('');
-                    $(".child-nodes").html(childNode.length);
-                }
-            }
-            else {
-                if (text != null) {
-                    $(".child-nodes").html('');
-                    $(".full-text").html(text);
-                }
-                else {
-                    $(".full-text").html('');
-                    $(".child-nodes").html('');
-                }
-            }
+            var supporting = 0;
+            var disproving = 0;
+            getChildNum(text, childNode, supporting, disproving);
+
+
+
+
+
+
+
         })
     }
 
-    
+    function getChildNum(text, childNode, supporting, disproving){
+        for (var i in childNode){
+            var oneNode = childNode[i];
+            var oneNodeData = info[oneNode];
 
+            if (oneNodeData.group == 'supporting'){
+                supporting = supporting + 1
+            }
+            else if (oneNodeData.group == 'disproving'){
+                disproving = disproving + 1
+            }
+            else if (oneNodeData.group == null){
+                return null
+            }
+        }
+        console.log("supporting " + supporting);
+        console.log("disproving " + disproving);
+        getText(text, childNode, supporting, disproving);
+
+    }
+
+    function getText(text, childNode, supporting, disproving){
+        if (childNode != null) {
+            if (text != null) {
+                $(".supporting").html("Supporting: " + supporting);
+                $(".disproving").html("Disproving: " + disproving);
+                $(".full-text").html(text)
+            }
+            else {
+                $(".full-text").html('');
+                $(".supporting").html("Supporting: " + supporting);
+                $(".disproving").html("Disproving: " + disproving);
+            }
+        }
+        else {
+            if (text != null) {
+                $(".supporting").html("Supporting: 0");
+                $(".disproving").html("Disproving: 0");
+                $(".full-text").html(text);
+            }
+            else {
+                $(".full-text").html('');
+                $(".supporting").html("Supporting: 0");
+                $(".disproving").html("Disproving: 0");
+            }
+        }
+    }
 
 
 });
