@@ -283,7 +283,7 @@ $(document).ready(function() {
                     label: info[childNode].shortText,
                     fullText: info[childNode].fullText,
                     group: info[childNode].group,
-                    childNode: info[childNode].children
+                    children: info[childNode].children
                 };
                 nodeData.push(window['child' + childID + i]);
 
@@ -302,7 +302,6 @@ $(document).ready(function() {
         nodeData.push(parent, selected);
         edgeData.push({from: parentNode, to: 'selected', smooth: false});
 
-
         // create dataSet from predefined data above
         nodes = new vis.DataSet(nodeData);
         // create an array with edges
@@ -314,7 +313,6 @@ $(document).ready(function() {
             nodes: nodes,
             edges: edges
         };
-
 
         // option details
         var options = {
@@ -351,7 +349,7 @@ $(document).ready(function() {
                 supporting: {color: {background: 'white', border: '#2100c4'}},
                 disproving: {color: {background: 'white', border: '#fe2300'}},
                 answer: {color: {background: '#f6f6f6', border: '#9e9e9e'}},
-                question:  {color: {background: '#f6f6f6', border: '#9e9e9e'}}
+                question: {color: {background: '#f6f6f6', border: '#9e9e9e'}}
             },
 
             // mouse and touch events
@@ -420,38 +418,45 @@ $(document).ready(function() {
             }
         };
 
-
-
         // initialize network
         network = new vis.Network(container, data, options);
         network.setOptions(options);
-
-
 
         network.on('doubleClick', function (event) {
             var clickedNode = event.nodes;
             getData(clickedNode);
         });
 
-        network.on('click', function(event){
+        network.on('click', function (event) {
             var selectedNode = event.nodes;
+            var nodeData = nodes.get(selectedNode)[0];
             var text = nodes.get(selectedNode)[0].fullText;
-            if(text != null) {
-                $(".full-text").html(text);
+            var childNode = nodeData.children;
+            console.log(childNode);
+            if (childNode != null) {
+                if (text != null) {
+                    (".child-nodes").html(childNode.length);
+                    $(".full-text").html(text)
+                }
+                else {
+                    $(".full-text").html('');
+                    $(".child-nodes").html(childNode.length);
+                }
             }
-            else{
-                return null;
+            else {
+                if (text != null) {
+                    $(".child-nodes").html('');
+                    $(".full-text").html(text);
+                }
+                else {
+                    $(".full-text").html('');
+                    $(".child-nodes").html('');
+                }
             }
-        });
-
-
+        })
     }
 
-    network.on( 'click', function(properties) {
-        var ids = properties.nodes;
-        var clickedNodes = nodes.get(ids);
-        console.log('clicked nodes:', clickedNodes);
-    });
+    
 
 
 
