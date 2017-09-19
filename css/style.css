@@ -96,4 +96,13 @@ img {
     cursor: pointer;
     background-color: rgba(33, 62, 228, 0.8);
 }
+.nodeContainer{
+    border: 1px solid black;
+}
+.close {
+    float:right;
+    display:inline-block;
+    padding:2px 5px;
+    background:#ccc;
+}
 

@@ -112,7 +112,7 @@ $(document).ready(function() {
                     min: 1,
                     max: 15
                 },
-                selectionWidth: 2,
+                selectionWidth: 3,
                 selfReferenceSize: 20,
                 smooth: {
                     enabled: true,
@@ -132,6 +132,7 @@ $(document).ready(function() {
             // mouse and touch events
             interaction: {
                 dragNodes: true,
+                hover: true,
                 dragView: true,
                 navigationButtons: true,
                 selectConnectedEdges: true,
@@ -199,6 +200,7 @@ $(document).ready(function() {
             }
         });
 
+        // change data to selected
         network.on('doubleClick', function (event) {
             var clickedNode = event.nodes;
             var nodeData = nodes.get(clickedNode)[0];
@@ -219,6 +221,7 @@ $(document).ready(function() {
             }
         });
 
+        // add node to map and get full text
         network.on('click', function (event) {
             var selectedNode = event.nodes;
             var nodeData = nodes.get(selectedNode)[0];
@@ -237,7 +240,17 @@ $(document).ready(function() {
             // console.log(nodeDataID);
             // console.log(nodeDataText);
             // nodes.update({id: nodeDataID, label: nodeDataText});
-        })
+        });
+
+        // cursor when mouse hovers on node
+        network.on("hoverNode", function (params) {
+            network.canvas.body.container.style.cursor = 'pointer'
+        });
+
+        network.on("blurNode", function (params) {
+            network.canvas.body.container.style.cursor = 'default'
+        });
+
     }
 
     // adding counter to children (if supporting or disproving)
@@ -305,8 +318,11 @@ $(document).ready(function() {
 
         // navigation bar - navigate to clicked node
         $("#" + nodeDataID).on('click',function(event) {
-            getData(event.target.id);
+            if (selectedNode.id != event.target.id) {
+                getData(event.target.id);
+            }
         });
     }
+
 
 });
