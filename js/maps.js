@@ -15,9 +15,9 @@ $(document).ready(function() {
     var questionNode = info[1].shortText;
     var nodeMapArray = [];
 
-
     // heading text to page question
     $(".question").html(questionNode);
+    // initialize selected data on load
     getData(100);
     addNodeMap(info[100]);
 
@@ -177,7 +177,7 @@ $(document).ready(function() {
                 hierarchicalRepulsion: {
                     centralGravity: 0.0,
                     springLength: 500,
-                    springConstant: 0.01,
+                    springConstant: 0.007,
                     nodeDistance: 425,
                     damping: 0.09
                 },
@@ -189,7 +189,6 @@ $(document).ready(function() {
         network = new vis.Network(container, data, options);
         network.setOptions(options);
 
-
         // how to set options to individual node
         var nodeSelected = nodes.get('selected');
         network.body.nodes[nodeSelected.id].setOptions({
@@ -197,7 +196,6 @@ $(document).ready(function() {
                 size: 25
             }
         });
-
 
         network.on('doubleClick', function (event) {
             var clickedNode = event.nodes;
@@ -288,13 +286,13 @@ $(document).ready(function() {
             var nodeDataID = nodeData.id;
             nodeMapArray.push(nodeDataID.toString());
             var nodeDataGroup = nodeData.group;
-            var nodeDiv = $("<div/>").html("test").addClass('node-map').addClass('col-md-2').attr('id', nodeDataID);
+            var nodeDiv = $("<div/>").addClass('node-map').addClass('col-md-2').attr('id', nodeDataID);
             $(".navigation-menu").append(nodeDiv);
             if(nodeDataGroup == "supporting"){
-                $("#" + nodeDataID).addClass("node-map-supporting");
+                $("#" + nodeDataID).addClass("node-map-supporting").html("Supporting");
             }
             else if(nodeDataGroup == "disproving"){
-                $("#" + nodeDataID).addClass("node-map-disproving");
+                $("#" + nodeDataID).addClass("node-map-disproving").html("Disproving");
             }
         }
 
@@ -302,9 +300,6 @@ $(document).ready(function() {
         $("#" + nodeDataID).on('click',function(event) {
             getData(event.target.id);
         });
-
     }
-
-
 
 });

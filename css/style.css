@@ -64,9 +64,7 @@ h3.question.col-md-12 {
 p.supporting {
     display: inline-block;
     color: blue;
-
 }
-
 p.disproving {
     display: inline-block;
     color: red;
@@ -76,21 +74,26 @@ img {
 }
 .node-map{
     display: inline-block;
+    border-radius: 21px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 13px;
+    padding: 6px;
 }
 .node-map-supporting{
     border: 1px solid blue;
-    box-sizing: border-box;
+    background-color: rgba(33, 62, 228, 0.41);
 }
 .node-map-disproving{
     border: 1px solid red;
-    box-sizing: border-box;
+    background-color: rgba(244, 67, 54, 0.43);
 }
 .node-map-disproving:hover{
-    border: 2px solid red;
     cursor: pointer;
+    background-color: rgba(244, 67, 54, 0.8);
 }
 .node-map-supporting:hover{
-    border: 2px solid blue;
     cursor: pointer;
+    background-color: rgba(33, 62, 228, 0.8);
 }
 
