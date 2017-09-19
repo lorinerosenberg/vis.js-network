@@ -3,9 +3,9 @@ var info = {
     1: {
         'id' : 1,
         'parent': null,
-        'children': [10,11,12],
+        'children': [10],
         'shortText': 'Are universal human rights really universal?',
-        'fullText': null,
+        'fullText': 'Are universal human rights really universal?',
         'group': 'question'
     },
     10: {
@@ -13,48 +13,32 @@ var info = {
         'parent': 1,
         'children': [100],
         'shortText': 'General Principals: Can we ensure that AI is transparent?',
-        'fullText': null,
-        'group': 'answer'
-    },
-    11: {
-        'id' : 11,
-        'parent': 1,
-        'children': null,
-        'shortText': 'General Principals: How can we extend the benefits and minimize the risks of AI technology being misused?',
-        'fullText': null,
-        'group': 'answer'
-    },
-    12: {
-        'id' : 12,
-        'parent': 1,
-        'children': null,
-        'shortText': 'Talmud test trial. Silver acquires gold',
-        'fullText': null,
+        'fullText': 'General Principals: Can we ensure that AI is transparent?',
         'group': 'answer'
     },
     100: {
         'id' : 100,
         'parent': 10,
         'children': [1000,1001,1002,1003,1004,1005,1006],
-        'shortText': 'Etzioni (NB- Member of IEEE committee, LinkedIn )...',
+        'shortText': 'Etzioni (NB- Member of IEEE committee...',
         'fullText': 'Etzioni (NB- Member of IEEE committee, LinkedIn )- yes - an A.I. system must clearly disclose that it is not human. As we have seen in the case of bots — computer programs that can engage in increasingly sophisticated dialogue with real people — society needs assurances that A.I. systems are clearly labeled as such. In 2016, a bot known as Jill Watson, which served as a teaching assistant for an online course at Georgia Tech, fooled students into thinking it was human. A more serious example is the widespread use of pro-Trump political bots on social media in the days leading up to the 2016 elections, according to researchers at Oxford.',
-        'group': 'approving'
+        'group': 'supporting'
     },
     1000: {
         'id' : 1000,
         'parent': 100,
         'children': [10000,10001,10002],
-        'shortText': 'If so then we should also have statutory labels whenever there is photoshop or comedic dubbing',
-        'fullText': null,
-        'group': 'approving'
+        'shortText': 'If so then we should also have statutory labels...',
+        'fullText': 'If so then we should also have statutory labels whenever there is photoshop or comedic dubbing',
+        'group': 'disproving'
     },
     1001: {
         'id' : 1001,
         'parent': 100,
         'children': null,
-        'shortText': 'That should also include automated transcripts from voice recognition on videos',
-        'fullText': null,
-        'group': 'approving'
+        'shortText': 'That should also include automated transcripts...',
+        'fullText': 'That should also include automated transcripts from voice recognition on videos',
+        'group': 'supporting'
     },
     1002: {
         'id' : 1002,
@@ -76,8 +60,8 @@ var info = {
         'id' : 1004,
         'parent': 100,
         'children': [10040],
-        'shortText': 'Yes. Celebrity bots are very popular with teenagers.',
-        'fullText': null,
+        'shortText': 'Yes. Celebrity bots are very popular...',
+        'fullText': 'Yes. Celebrity bots are very popular with teenagers.',
         'group': 'supporting'
     },
     1005: {
@@ -100,9 +84,9 @@ var info = {
         'id' : 10000,
         'parent': 1000,
         'children': null,
-        'shortText': '#Feedback right here I might want to bring in another expert...',
+        'shortText': '#Feedback right here I might want...',
         'fullText': "#Feedback right here I might want to bring in another expert and not necessarily show them the thread above. e.g. start another question and link it to above. This is where it gets interesting who has admin rights, who can confer, can that person hide parts of the ​conversation. My intuition is that whoever owns the license has admin or group of admins can see everything and they control groups of who sees daughter questions. It's probably later down your dev path, from a user view even in enterprise, say intel, these 'Chinese Walls' could be a user feature to consider.",
-        'group': 'approving'
+        'group': 'supporting'
     },
     10001: {
         'id' : 10001,
@@ -140,15 +124,15 @@ var info = {
         'id' : 10051,
         'parent': 1005,
         'children': null,
-        'shortText': "# love that this recognizes it's debatable!",
-        'fullText': null,
+        'shortText': "love that this recognizes it's debatable!",
+        'fullText': "love that this recognizes it's debatable!",
         'group': 'supporting'
     },
     10052: {
         'id' : 10052,
         'parent': 1005,
         'children': null,
-        'shortText': 'No, it is more relevant to look at AI transparency...',
+        'shortText': 'No, it is more relevant to look at AI...',
         'fullText': "No, it is more relevant to look at AI transparency. We can't fight against the fact that bots will prefer to communicate with bots.",
         'group': 'disproving'
     },
@@ -164,17 +148,17 @@ var info = {
         'id' : 100011,
         'parent': 10001,
         'children': null,
-        'shortText': "Well photoshopping is already labeled in Israel .",
-        'fullText': null,
+        'shortText': "Well photoshopping is already labeled in Israel.",
+        'fullText': "Well photoshopping is already labeled in Israel.",
         'group': 'disproving'
     },
     100020: {
         'id': 100020,
         'parent': 10002,
         'children': null,
-        'shortText': '#Feedback in the above the quality of the research ...',
+        'shortText': '#Feedback in the above the quality of the...',
         'fullText': "#Feedback in the above the quality of the research is arguably higher than other places as it is academic, as opposed to news reports in other places. A user may want to flag that.",
-        'group': 'approving'
+        'group': 'supporting'
     },
     100400: {
         'id' : 100400,
@@ -212,17 +196,17 @@ var info = {
         'id' : 1004011,
         'parent': 100401,
         'children': [10040110],
-        'shortText': "Yes, there is a ​clear precedent for this in advertising​ to children.",
-        'fullText': null,
+        'shortText': "Yes, there is a ​clear precedent for this...",
+        'fullText': "Yes, there is a ​clear precedent for this in advertising​ to children.",
         'group': 'supporting'
     },
     10001000: {
         'id' : 10001000,
         'parent': 1000100,
         'children': null,
-        'shortText': "#Feedback. In this longer thread there's a claim ....",
+        'shortText': "#Feedback. In this longer thread there's....",
         'fullText': "#Feedback. In this longer thread there's a claim and then a denial and then a denial on the denial which makes it a positive. Wondering whether system should do something like make the granddaughter (double negative) a grandmother and swap colors, if that makes sense. The reason as user I did not post the granddaughter in the level of the grandmother is because it is arguing an ever more specific case, so it would not make sense in the logic of the conversation when I write it to put it at grandmother level.",
-        'group': 'approving'
+        'group': 'supporting'
     },
     10001001: {
         'id' : 10001001,

@@ -12,12 +12,14 @@ $(document).ready(function() {
     var edgeData;
     var parent;
     var selected;
-    var questionNode = info[10].shortText;
+    var questionNode = info[1].shortText;
+    var nodeMapArray = [];
 
 
     // heading text to page question
     $(".question").html(questionNode);
     getData(100);
+    addNodeMap(info[100]);
 
     // mindmap functionality
     function getData(selectedID) {
@@ -28,6 +30,7 @@ $(document).ready(function() {
         nodeData = [];
         edgeData = [];
 
+        if (childrenNodes != null && parentNode != null) {
         // node data
         parent = {
             id: parentNode,
@@ -43,7 +46,7 @@ $(document).ready(function() {
         };
 
         // formatting and pushing childNode data into an array
-        if (childrenNodes != null) {
+
             for (var i in childrenNodes) {
                 var childNode = childrenNodes[i];
                 var childID = selectedID;
@@ -152,7 +155,7 @@ $(document).ready(function() {
             nodes: {
                 font: {
                     color: '#343434',
-                    size: 18, // px
+                    size: 23, // px
                     face: 'arial'
                 },
                 heightConstraint: {
@@ -161,15 +164,6 @@ $(document).ready(function() {
                 },
                 mass: 1,
                 physics: true,
-                scaling: {
-                    label: {
-                        enabled: true,
-                        min: 14,
-                        max: 18,
-                        maxVisible: 18,
-                        drawThreshold: 8
-                    }
-                },
                 shape: 'box',
                 shapeProperties: {
                     borderRadius: 6
@@ -181,12 +175,13 @@ $(document).ready(function() {
             physics: {
                 enabled: true,
                 hierarchicalRepulsion: {
-                    centralGravity: 0,
+                    centralGravity: 0.0,
                     springLength: 500,
-                    springConstant: 0.05,
-                    nodeDistance: 250,
+                    springConstant: 0.01,
+                    nodeDistance: 425,
                     damping: 0.09
-                }
+                },
+                solver: 'hierarchicalRepulsion'
             }
         };
 
@@ -194,22 +189,53 @@ $(document).ready(function() {
         network = new vis.Network(container, data, options);
         network.setOptions(options);
 
+
+        // how to set options to individual node
+        var nodeSelected = nodes.get('selected');
+        network.body.nodes[nodeSelected.id].setOptions({
+            font: {
+                size: 25
+            }
+        });
+
+
         network.on('doubleClick', function (event) {
             var clickedNode = event.nodes;
+            var nodeData = nodes.get(clickedNode)[0];
             getData(clickedNode);
+            var nodeDataIdString = (nodeData.id).toString();
+
+            // only add node to map if it doesn't already exist
+            if(nodeMapArray.includes(nodeDataIdString)){
+                return null
+            }
+            else{
+                addNodeMap(nodeData);
+            }
         });
 
         network.on('click', function (event) {
             var selectedNode = event.nodes;
             var nodeData = nodes.get(selectedNode)[0];
-            var text = nodes.get(selectedNode)[0].fullText;
-            var childNode = nodeData.children;
+
+            if (nodeData){
+                var text = nodes.get(selectedNode)[0].fullText;
+                var childNode = nodeData.children;
+            }
             var supporting = 0;
             var disproving = 0;
             getChildNum(text, childNode, supporting, disproving);
+
+            // TODO collapsible nodes with full text
+            // var nodeDataID = nodeData.id;
+            // var nodeDataText = nodeData.fullText;
+            // console.log(nodeDataID);
+            // console.log(nodeDataText);
+            // nodes.update({id: nodeDataID, label: nodeDataText});
         })
     }
 
+    // adding counter to children (if supporting or disproving)
     function getChildNum(text, childNode, supporting, disproving){
         for (var i in childNode){
             var oneNode = childNode[i];
@@ -227,6 +253,7 @@ $(document).ready(function() {
         getText(text, childNode, supporting, disproving);
     }
 
+    // changing html text
     function getText(text, childNode, supporting, disproving){
         if (childNode != null) {
             if (text != null) {
@@ -240,7 +267,7 @@ $(document).ready(function() {
                 $(".disproving").html(disproving);
             }
         }
-        else {
+        else if (childNode == null) {
             if (text != null) {
                 $(".supporting").html("0");
                 $(".disproving").html("0");
@@ -253,6 +280,31 @@ $(document).ready(function() {
             }
         }
     }
+
+    // add node to navigation bar
+    function addNodeMap(nodeData){
+        // nodeData recieves data of selected node
+        if(nodeData.children != null) {
+            var nodeDataID = nodeData.id;
+            nodeMapArray.push(nodeDataID.toString());
+            var nodeDataGroup = nodeData.group;
+            var nodeDiv = $("<div/>").html("test").addClass('node-map').addClass('col-md-2').attr('id', nodeDataID);
+            $(".navigation-menu").append(nodeDiv);
+            if(nodeDataGroup == "supporting"){
+                $("#" + nodeDataID).addClass("node-map-supporting");
+            }
+            else if(nodeDataGroup == "disproving"){
+                $("#" + nodeDataID).addClass("node-map-disproving");
+            }
+        }
+
+        // navigation bar - navigate to clicked node
+        $("#" + nodeDataID).on('click',function(event) {
+            getData(event.target.id);
+        });
+
+    }
+
 
 
 });

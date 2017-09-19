@@ -61,20 +61,36 @@ h3.question.col-md-12 {
 .container-small, .container-large {
     max-width: 100%;
 }
-.child-nodes{
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
 p.supporting {
     display: inline-block;
     color: blue;
-    margin: 0px;
+
 }
 
 p.disproving {
     display: inline-block;
-    padding-left: 31px;
     color: red;
-    margin: 0px;
+}
+img {
+    padding: 23px;
+}
+.node-map{
+    display: inline-block;
+}
+.node-map-supporting{
+    border: 1px solid blue;
+    box-sizing: border-box;
+}
+.node-map-disproving{
+    border: 1px solid red;
+    box-sizing: border-box;
+}
+.node-map-disproving:hover{
+    border: 2px solid red;
+    cursor: pointer;
+}
+.node-map-supporting:hover{
+    border: 2px solid blue;
+    cursor: pointer;
 }
 
