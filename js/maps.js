@@ -33,6 +33,7 @@ $(document).ready(function() {
         if (childrenNodes != null && parentNode != null) {
         // node data
         parent = {
+            parent: info[parentNode].parent,
             id: parentNode,
             label: info[parentNode].shortText,
             fullText: info[parentNode].fullText,
@@ -53,6 +54,7 @@ $(document).ready(function() {
                 var edgeID = selectedID;
 
                 window['child' + childID + i] = {
+                    parent: info[childNode].parent,
                     id: childID + i,
                     label: info[childNode].shortText,
                     fullText: info[childNode].fullText,
@@ -200,15 +202,20 @@ $(document).ready(function() {
         network.on('doubleClick', function (event) {
             var clickedNode = event.nodes;
             var nodeData = nodes.get(clickedNode)[0];
-            getData(clickedNode);
-            var nodeDataIdString = (nodeData.id).toString();
+            if (clickedNode.length != 0) {
+                if (nodeData.parent != null) {
+                    getData(clickedNode);
+                }
 
-            // only add node to map if it doesn't already exist
-            if(nodeMapArray.includes(nodeDataIdString)){
-                return null
-            }
-            else{
-                addNodeMap(nodeData);
+                var nodeDataIdString = (nodeData.id).toString();
+
+                // only add node to map if it doesn't already exist
+                if (nodeMapArray.includes(nodeDataIdString)) {
+                    return null
+                }
+                else {
+                    addNodeMap(nodeData);
+                }
             }
         });
 
