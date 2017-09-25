@@ -39,6 +39,7 @@ $(document).ready(function() {
         parent = {
             parent: info[parentNode].parent,
             id: parentNode,
+            class: 'parent',
             label: info[parentNode].shortText,
             fullText: info[parentNode].fullText,
             group: info[parentNode].group
@@ -53,15 +54,16 @@ $(document).ready(function() {
         };
         supporting = {
             id: 'supporting',
-            group: 'supportingNode'
+            group: 'supportingNode',
+            size: 30
         };
         disproving = {
             id: 'disproving',
-            group: 'disprovingNode'
+            group: 'disprovingNode',
+            size: 30
         };
 
         // formatting and pushing childNode data into an array
-
             for (var i in childrenNodes) {
                 var childNode = childrenNodes[i];
                 var childID = selectedID;
@@ -74,7 +76,7 @@ $(document).ready(function() {
                     label: info[childNode].shortText,
                     fullText: info[childNode].fullText,
                     group: nodeGroup,
-                    children: info[childNode].children,
+                    children: info[childNode].children
                 };
                 nodeData.push(window['child' + childID + i]);
                 // TODO nodes only when it has children
@@ -262,17 +264,34 @@ $(document).ready(function() {
         network.on('doubleClick', function (event) {
             var clickedNode = event.nodes;
             var nodeData = nodes.get(clickedNode)[0];
-            if (clickedNode.length != 0 && clickedNode != 'selected') {
-                if (nodeData.parent != null) {
-                    getData(clickedNode);
+            console.log(nodeData);
+            if (nodeData.class == 'parent'){
+                var nodeDataId = nodeData.id;
+                var nodeDataIdString = (nodeDataId).toString();
+                var element = nodeMapArray.indexOf(nodeDataIdString);
+                getData(clickedNode);
+                if (element != -1){
+                    var removedNodes = selectedID;
+                    $("#" + removedNodes).remove();
+                    var a = nodeMapArray.indexOf(removedNodes);
+                    nodeMapArray.splice(a, 1);
                 }
-                var nodeDataParent = nodeData.parent;
+            }
+            else if (clickedNode > 0) {
                 var nodeDataIdString = (nodeData.id).toString();
-                if (nodeMapArray.includes(nodeDataIdString)) {
+                if (nodeData.children == null && nodeData.class == 'child') {
                     return null
                 }
-                else {
-                    addNodeMap(nodeData);
+                else if (clickedNode.length != 0 && clickedNode != 'selected') {
+                    if (nodeData.parent != null) {
+                        getData(clickedNode);
+                    }
+                    if (nodeMapArray.includes(nodeDataIdString)) {
+                        return null
+                    }
+                    else {
+                        addNodeMap(nodeData);
+                    }
                 }
             }
         });
@@ -302,24 +321,30 @@ $(document).ready(function() {
                 }
             }
             nodeDataShortText = nodeData.label;
-
-
-            if (currentNodeDataID == 'supporting' || currentNodeDataID == 'disproving'){
+            if (currentNodeDataID == 'supporting' || currentNodeDataID == 'disproving') {
                 return null
             }
-            else if (currentNodeDataID != 'selected' && currentNodeDataID != parentNode){
-                var nodeDataText = '<b>'+supporting +'    </b>'+'    <code>'+ disproving + '</code>'+'\n' + text;
+            else if (currentNodeDataID != 'selected' && currentNodeDataID != parentNode) {
+                var nodeDataText = '<b>' + supporting + '    </b>' + '    <code>' + disproving + '</code>' + '\n' + text;
                 nodeDataText = nodeDataText.replace(/(\S(.{0,50}\S)?)\s+/g, '$1\n');
-                nodes.update({id: currentNodeDataID, label: nodeDataText, shortText: nodeDataShortText, font: {size: 30} });
+                nodes.update({
+                    id: currentNodeDataID,
+                    label: nodeDataText,
+                    shortText: nodeDataShortText,
+                    font: {size: 30}
+                });
             }
-            else{
+            else {
                 var nodeDataText = text;
                 nodeDataText = nodeDataText.replace(/(\S(.{0,50}\S)?)\s+/g, '$1\n');
-                nodes.update({id: currentNodeDataID, label: nodeDataText, shortText: nodeDataShortText, font: {size: 30} });
+                nodes.update({
+                    id: currentNodeDataID,
+                    label: nodeDataText,
+                    shortText: nodeDataShortText,
+                    font: {size: 30}
+                });
             }
-
             network.fit();
-
 
         });
 
@@ -342,18 +367,14 @@ $(document).ready(function() {
 
 
     // add node to navigation bar
-    // TODO clear cache
     function addNodeMap(nodeData){
         // nodeData recieves data of selected node
         if(nodeData.children != null) {
             var nodeDataID = nodeData.id;
             nodeMapArray.push(nodeDataID.toString());
             var nodeDataGroup = nodeData.group;
-
             var nodeDiv = $("<div/>").addClass('node-map').addClass('col-md-2').attr('id', nodeDataID);
             $(".navigation-menu").append(nodeDiv);
-
-
             if(nodeDataGroup == "supporting"){
                 $("#" + nodeDataID).addClass("node-map-supporting").html(nodeData.shortText);
             }
@@ -364,7 +385,7 @@ $(document).ready(function() {
 
         // navigation bar - navigate to clicked node
         $("#" + nodeDataID).on('click',function(event) {
-            console.log(nodeMapArray);
+            console.log(event.target.id);
             var a = nodeMapArray.indexOf(event.target.id);
             var lengthDifference = nodeMapArray.length - 1 - a;
             var removedNodes = nodeMapArray.splice(a+1, lengthDifference);
