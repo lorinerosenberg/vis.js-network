@@ -263,7 +263,7 @@ $(document).ready(function() {
         network.on('doubleClick', function (event) {
             var clickedNode = event.nodes;
             var nodeData = nodes.get(clickedNode)[0];
-            if (clickedNode.length != 0) {
+            if (clickedNode.length != 0 && clickedNode != 'selected') {
                 if (nodeData.parent != null) {
                     getData(clickedNode);
                 }
@@ -304,7 +304,6 @@ $(document).ready(function() {
             }
             nodeDataShortText = nodeData.label;
 
-            console.log(currentNodeDataID);
 
             if (currentNodeDataID == 'supporting' || currentNodeDataID == 'disproving'){
                 return null
@@ -312,12 +311,12 @@ $(document).ready(function() {
             else if (currentNodeDataID != 'selected' && currentNodeDataID != parentNode){
                 var nodeDataText = '<b>'+supporting +'    </b>'+'    <code>'+ disproving + '</code>'+'\n' + text;
                 nodeDataText = nodeDataText.replace(/(\S(.{0,65}\S)?)\s+/g, '$1\n');
-                nodes.update({id: currentNodeDataID, label: nodeDataText, font: {size: 30} });
+                nodes.update({id: currentNodeDataID, label: nodeDataText, shortText: nodeDataShortText, font: {size: 30} });
             }
             else{
                 var nodeDataText = text;
                 nodeDataText = nodeDataText.replace(/(\S(.{0,65}\S)?)\s+/g, '$1\n');
-                nodes.update({id: currentNodeDataID, label: nodeDataText, font: {size: 30} });
+                nodes.update({id: currentNodeDataID, label: nodeDataText, shortText: nodeDataShortText, font: {size: 30} });
             }
 
 
@@ -353,10 +352,10 @@ $(document).ready(function() {
 
 
             if(nodeDataGroup == "supporting"){
-                $("#" + nodeDataID).addClass("node-map-supporting").html("Supporting");
+                $("#" + nodeDataID).addClass("node-map-supporting").html(nodeData.shortText);
             }
             else if(nodeDataGroup == "disproving"){
-                $("#" + nodeDataID).addClass("node-map-disproving").html("Disproving");
+                $("#" + nodeDataID).addClass("node-map-disproving").html(nodeData.shortText);
             }
         }
 
@@ -364,11 +363,7 @@ $(document).ready(function() {
         $("#" + nodeDataID).on('click',function(event) {
             if (selectedNode.id != event.target.id) {
                 getData(event.target.id);
-                var a = nodeMapArray.indexOf(event.target.id);
-                nodeMapArrayLength = nodeMapArray.length+1;
-                for (var i = a; i<= nodeMapArrayLength; i++){
-                    $('#' + nodeMapArray[i]).remove();
-                }
+                console.log(nodeData);
             }
         });
     }
