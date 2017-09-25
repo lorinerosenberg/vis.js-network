@@ -364,10 +364,12 @@ $(document).ready(function() {
 
         // navigation bar - navigate to clicked node
         $("#" + nodeDataID).on('click',function(event) {
+            console.log(nodeMapArray);
             var a = nodeMapArray.indexOf(event.target.id);
             var lengthDifference = nodeMapArray.length - 1 - a;
             var removedNodes = nodeMapArray.splice(a+1, lengthDifference);
-            for (var i = 0; i<removedNodes; i++){
+            console.log(nodeMapArray);
+            for (var i = 0; i<removedNodes.length; i++){
                 $("#" + removedNodes[i]).remove();
             }
             if (selectedNode.id != event.target.id) {
