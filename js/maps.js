@@ -15,7 +15,7 @@ $(document).ready(function() {
     var supporting;
     var disproving;
     var nodeDataShortText;
-    var currentNodeDataID
+    var currentNodeDataID;
     var questionNode = info[1].shortText;
     var nodeMapArray = [];
 
@@ -162,7 +162,6 @@ $(document).ready(function() {
                 dragNodes: true,
                 hover: true,
                 dragView: true,
-                navigationButtons: true,
                 selectConnectedEdges: true,
                 zoomView: true
             },
@@ -267,8 +266,8 @@ $(document).ready(function() {
                 if (nodeData.parent != null) {
                     getData(clickedNode);
                 }
+                var nodeDataParent = nodeData.parent;
                 var nodeDataIdString = (nodeData.id).toString();
-                // only add node to map if it doesn't already exist
                 if (nodeMapArray.includes(nodeDataIdString)) {
                     return null
                 }
@@ -310,18 +309,21 @@ $(document).ready(function() {
             }
             else if (currentNodeDataID != 'selected' && currentNodeDataID != parentNode){
                 var nodeDataText = '<b>'+supporting +'    </b>'+'    <code>'+ disproving + '</code>'+'\n' + text;
-                nodeDataText = nodeDataText.replace(/(\S(.{0,65}\S)?)\s+/g, '$1\n');
+                nodeDataText = nodeDataText.replace(/(\S(.{0,50}\S)?)\s+/g, '$1\n');
                 nodes.update({id: currentNodeDataID, label: nodeDataText, shortText: nodeDataShortText, font: {size: 30} });
             }
             else{
                 var nodeDataText = text;
-                nodeDataText = nodeDataText.replace(/(\S(.{0,65}\S)?)\s+/g, '$1\n');
+                nodeDataText = nodeDataText.replace(/(\S(.{0,50}\S)?)\s+/g, '$1\n');
                 nodes.update({id: currentNodeDataID, label: nodeDataText, shortText: nodeDataShortText, font: {size: 30} });
             }
+
+            network.fit();
 
 
         });
 
+        // only one node shows full text at a time
         network.on("deselectNode", function () {
             nodes.update({id: currentNodeDataID, label: nodeDataShortText, font: {size: 25} });
         });
@@ -331,6 +333,7 @@ $(document).ready(function() {
             network.canvas.body.container.style.cursor = 'pointer'
         });
 
+        // cursor disappears on network
         network.on("blurNode", function () {
             network.canvas.body.container.style.cursor = 'default'
         });
@@ -361,10 +364,16 @@ $(document).ready(function() {
 
         // navigation bar - navigate to clicked node
         $("#" + nodeDataID).on('click',function(event) {
+            var a = nodeMapArray.indexOf(event.target.id);
+            var lengthDifference = nodeMapArray.length - 1 - a;
+            var removedNodes = nodeMapArray.splice(a+1, lengthDifference);
+            for (var i = 0; i<removedNodes; i++){
+                $("#" + removedNodes[i]).remove();
+            }
             if (selectedNode.id != event.target.id) {
                 getData(event.target.id);
-                console.log(nodeData);
             }
+
         });
     }
 
