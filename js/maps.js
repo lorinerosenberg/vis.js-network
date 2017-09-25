@@ -12,6 +12,10 @@ $(document).ready(function() {
     var edgeData;
     var parent;
     var selected;
+    var supporting;
+    var disproving;
+    var nodeDataShortText;
+    var currentNodeDataID
     var questionNode = info[1].shortText;
     var nodeMapArray = [];
 
@@ -40,10 +44,20 @@ $(document).ready(function() {
             group: info[parentNode].group
         };
         selected = {
+            parent: selectedNode.parent,
             id: 'selected',
             label: selectedNode.shortText,
             fullText: selectedNode.fullText,
-            group: selectedNode.group
+            group: selectedNode.group,
+            mass: 1
+        };
+        supporting = {
+            id: 'supporting',
+            group: 'supportingNode'
+        };
+        disproving = {
+            id: 'disproving',
+            group: 'disprovingNode'
         };
 
         // formatting and pushing childNode data into an array
@@ -52,32 +66,44 @@ $(document).ready(function() {
                 var childNode = childrenNodes[i];
                 var childID = selectedID;
                 var edgeID = selectedID;
+                var nodeGroup = info[childNode].group;
 
                 window['child' + childID + i] = {
                     parent: info[childNode].parent,
                     id: childID + i,
                     label: info[childNode].shortText,
                     fullText: info[childNode].fullText,
-                    group: info[childNode].group,
-                    children: info[childNode].children
+                    group: nodeGroup,
+                    children: info[childNode].children,
                 };
                 nodeData.push(window['child' + childID + i]);
-
-                window['edge' + edgeID + i] = {
-                    id: edgeID + i,
-                    from: 'selected',
-                    to: childID + i
-                };
-                edgeData.push(window['edge' + edgeID + i]);
-
+                // TODO nodes only when it has children
+                if (nodeGroup == 'supporting'){
+                    window['edge' + edgeID + i] = {
+                        id: edgeID + i,
+                        from: 'supporting',
+                        to: childID + i
+                    };
+                    edgeData.push(window['edge' + edgeID + i]);
+                }
+                else if (nodeGroup == 'disproving'){
+                    window['edge' + edgeID + i] = {
+                        id: edgeID + i,
+                        from: 'disproving',
+                        to: childID + i
+                    };
+                    edgeData.push(window['edge' + edgeID + i]);
+                }
             }
         }
         else {
             return null;
         }
 
-        nodeData.push(parent, selected);
-        edgeData.push({from: parentNode, to: 'selected', smooth: false});
+        nodeData.push(parent, selected, supporting, disproving);
+        edgeData.push({from: parentNode, to: 'selected', physics: true, smooth: false, dashes: [10,10,10]},
+            {from: 'selected', to: 'supporting', physics: false, smooth: false, arrows: {to: {enabled: false}}},
+            {from: 'selected', to: 'disproving', physics: false, smooth: false, arrows: {to: {enabled: false}}});
 
         // create dataSet from predefined data above
         nodes = new vis.DataSet(nodeData);
@@ -100,7 +126,7 @@ $(document).ready(function() {
             // edges options and styles
             edges: {
                 arrows: {
-                    to: {enabled: true, scaleFactor: 0.7, type: 'arrow'}
+                    to: {enabled: true, scaleFactor: 1, type: 'arrow'}
                 },
                 arrowStrikethrough: true,
                 color: {
@@ -116,15 +142,17 @@ $(document).ready(function() {
                 selfReferenceSize: 20,
                 smooth: {
                     enabled: true,
-                    type: "curvedCW",
-                    roundness: 0.5
-                }
+                    type: "dynamic"
+                },
+                width: 2
             },
 
             // groups options and styles (like classes)
             groups: {
                 supporting: {color: {background: 'white', border: '#2100c4'}},
                 disproving: {color: {background: 'white', border: '#fe2300'}},
+                supportingNode: {color: {background: '#2100c4', border: '#2100c4'}, shape: 'dot'},
+                disprovingNode: {color: {background: '#fe2300', border: '#fe2300'}, shape: 'dot'},
                 answer: {color: {background: '#f6f6f6', border: '#9e9e9e'}},
                 question: {color: {background: '#f6f6f6', border: '#9e9e9e'}}
             },
@@ -144,13 +172,12 @@ $(document).ready(function() {
                 improvedLayout: true,
                 hierarchical: {
                     enabled: true,
-                    levelSeparation: 300,
-                    nodeSpacing: 300,
-                    treeSpacing: 200,
-                    blockShifting: true,
-                    parentCentralization: true,
-                    direction: 'LR',        // UD, DU, LR, RL
-                    sortMethod: 'directed'   // hubsize, directed
+                    blockShifting: false,
+                    edgeMinimization: false,
+                    levelSeparation: 230,
+                    nodeSpacing: 100,
+                    sortMethod: "directed",
+                    direction: 'UD'
                 }
             },
 
@@ -159,12 +186,28 @@ $(document).ready(function() {
                 font: {
                     color: '#343434',
                     size: 23, // px
-                    face: 'arial'
+                    face: 'arial',
+                    multi: true,
+                    bold: {
+                        color: 'blue',
+                        size: 30, // px
+                        face: 'arial',
+                        vadjust: 0,
+                        mod: 'bold'
+                    },
+                    mono: {
+                        color: 'red',
+                        size: 30, // px
+                        face: 'arial',
+                        vadjust: 0,
+                        mod: 'bold'
+                    }
                 },
                 heightConstraint: {
-                    minimum: 70,
+                    minimum: 30,
                     valign: 'middle'
                 },
+                margin: 20,
                 mass: 1,
                 physics: true,
                 shape: 'box',
@@ -179,9 +222,9 @@ $(document).ready(function() {
                 enabled: true,
                 hierarchicalRepulsion: {
                     centralGravity: 0.0,
-                    springLength: 500,
-                    springConstant: 0.007,
-                    nodeDistance: 425,
+                    springLength: 300,
+                    springConstant: 0.001,
+                    nodeDistance: 150,
                     damping: 0.09
                 },
                 solver: 'hierarchicalRepulsion'
@@ -194,11 +237,27 @@ $(document).ready(function() {
 
         // how to set options to individual node
         var nodeSelected = nodes.get('selected');
-        network.body.nodes[nodeSelected.id].setOptions({
-            font: {
-                size: 25
-            }
-        });
+        if (nodeSelected.group == 'supporting'){
+            network.body.nodes[nodeSelected.id].setOptions({
+                font: {
+                    size: 28
+                },
+                color: {
+                    background: '#a2adf2'
+                }
+            });
+        }
+        else if (nodeSelected.group == 'disproving'){
+            network.body.nodes[nodeSelected.id].setOptions({
+                font: {
+                    size: 28
+                },
+                color: {
+                    background: '#f9aca6'
+                }
+            });
+        }
+
 
         // change data to selected
         network.on('doubleClick', function (event) {
@@ -208,9 +267,7 @@ $(document).ready(function() {
                 if (nodeData.parent != null) {
                     getData(clickedNode);
                 }
-
                 var nodeDataIdString = (nodeData.id).toString();
-
                 // only add node to map if it doesn't already exist
                 if (nodeMapArray.includes(nodeDataIdString)) {
                     return null
@@ -221,93 +278,80 @@ $(document).ready(function() {
             }
         });
 
-        // add node to map and get full text
-        network.on('click', function (event) {
+        // full text on select
+        network.on("selectNode", function (event) {
             var selectedNode = event.nodes;
             var nodeData = nodes.get(selectedNode)[0];
-
+            currentNodeDataID = nodeData.id;
             if (nodeData){
-                var text = nodes.get(selectedNode)[0].fullText;
+                var text = nodeData.fullText;
                 var childNode = nodeData.children;
             }
             var supporting = 0;
             var disproving = 0;
-            getChildNum(text, childNode, supporting, disproving);
+            for (var i in childNode){
+                var oneNode = childNode[i];
+                var oneNodeData = info[oneNode];
+                if (oneNodeData.group == 'supporting'){
+                    supporting = supporting + 1
+                }
+                else if (oneNodeData.group == 'disproving'){
+                    disproving = disproving + 1
+                }
+                else if (oneNodeData.group == null){
+                    return null
+                }
+            }
+            nodeDataShortText = nodeData.label;
 
-            // TODO collapsible nodes with full text
-            // var nodeDataID = nodeData.id;
-            // var nodeDataText = nodeData.fullText;
-            // console.log(nodeDataID);
-            // console.log(nodeDataText);
-            // nodes.update({id: nodeDataID, label: nodeDataText});
+            console.log(currentNodeDataID);
+
+            if (currentNodeDataID == 'supporting' || currentNodeDataID == 'disproving'){
+                return null
+            }
+            else if (currentNodeDataID != 'selected' && currentNodeDataID != parentNode){
+                var nodeDataText = '<b>'+supporting +'    </b>'+'    <code>'+ disproving + '</code>'+'\n' + text;
+                nodeDataText = nodeDataText.replace(/(\S(.{0,65}\S)?)\s+/g, '$1\n');
+                nodes.update({id: currentNodeDataID, label: nodeDataText, font: {size: 30} });
+            }
+            else{
+                var nodeDataText = text;
+                nodeDataText = nodeDataText.replace(/(\S(.{0,65}\S)?)\s+/g, '$1\n');
+                nodes.update({id: currentNodeDataID, label: nodeDataText, font: {size: 30} });
+            }
+
+
+        });
+
+        network.on("deselectNode", function () {
+            nodes.update({id: currentNodeDataID, label: nodeDataShortText, font: {size: 25} });
         });
 
         // cursor when mouse hovers on node
-        network.on("hoverNode", function (params) {
+        network.on("hoverNode", function () {
             network.canvas.body.container.style.cursor = 'pointer'
         });
 
-        network.on("blurNode", function (params) {
+        network.on("blurNode", function () {
             network.canvas.body.container.style.cursor = 'default'
         });
 
     }
 
-    // adding counter to children (if supporting or disproving)
-    function getChildNum(text, childNode, supporting, disproving){
-        for (var i in childNode){
-            var oneNode = childNode[i];
-            var oneNodeData = info[oneNode];
-            if (oneNodeData.group == 'supporting'){
-                supporting = supporting + 1
-            }
-            else if (oneNodeData.group == 'disproving'){
-                disproving = disproving + 1
-            }
-            else if (oneNodeData.group == null){
-                return null
-            }
-        }
-        getText(text, childNode, supporting, disproving);
-    }
-
-    // changing html text
-    function getText(text, childNode, supporting, disproving){
-        if (childNode != null) {
-            if (text != null) {
-                $(".supporting").html(supporting);
-                $(".disproving").html(disproving);
-                $(".full-text").html(text)
-            }
-            else {
-                $(".full-text").html('');
-                $(".supporting").html(supporting);
-                $(".disproving").html(disproving);
-            }
-        }
-        else if (childNode == null) {
-            if (text != null) {
-                $(".supporting").html("0");
-                $(".disproving").html("0");
-                $(".full-text").html(text);
-            }
-            else {
-                $(".full-text").html('');
-                $(".supporting").html("0");
-                $(".disproving").html("0");
-            }
-        }
-    }
 
     // add node to navigation bar
+    // TODO clear cache
     function addNodeMap(nodeData){
         // nodeData recieves data of selected node
         if(nodeData.children != null) {
             var nodeDataID = nodeData.id;
             nodeMapArray.push(nodeDataID.toString());
             var nodeDataGroup = nodeData.group;
+
             var nodeDiv = $("<div/>").addClass('node-map').addClass('col-md-2').attr('id', nodeDataID);
             $(".navigation-menu").append(nodeDiv);
+
+
             if(nodeDataGroup == "supporting"){
                 $("#" + nodeDataID).addClass("node-map-supporting").html("Supporting");
             }
@@ -320,6 +364,11 @@ $(document).ready(function() {
         $("#" + nodeDataID).on('click',function(event) {
             if (selectedNode.id != event.target.id) {
                 getData(event.target.id);
+                var a = nodeMapArray.indexOf(event.target.id);
+                nodeMapArrayLength = nodeMapArray.length+1;
+                for (var i = a; i<= nodeMapArrayLength; i++){
+                    $('#' + nodeMapArray[i]).remove();
+                }
             }
         });
     }
